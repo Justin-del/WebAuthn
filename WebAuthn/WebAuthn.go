@@ -178,6 +178,7 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 	fmt.Println("Is client data json correct", isClientDataJSONCorrect)
 	fmt.Println("Is correct hash", IsCorrectHash([32]byte(attestationObject.AuthData[0:32])))
 	fmt.Println("Is valid key", credentialPublicKeyMap)
+	fmt.Println(AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required"))
 
 	canRegister := isClientDataJSONCorrect && IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) && AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required") && IsValidKey(credentialPublicKeyMap)
 
