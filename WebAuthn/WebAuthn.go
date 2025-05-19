@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
-	"fmt"
 	"slices"
 
 	"github.com/fxamacker/cbor/v2"
@@ -115,11 +114,6 @@ depend for security purposes if not all authenticators support it.
 */
 func IsClientDataJSONCorrect(clientDataJSON string, expected_origin string, expected_type string, expected_challenge []byte) bool {
 	clientData := ParseClientDataJSON(clientDataJSON)
-	fmt.Println("clientData.Origin", clientData.Origin)
-	fmt.Println("expected origin", expected_origin)
-
-	fmt.Println("clientData.Challenge", clientData.Challenge)
-	fmt.Println("expected challenge", base64.RawURLEncoding.EncodeToString(expected_challenge))
 	return clientData.Origin == expected_origin && clientData.Type == expected_type && clientData.Challenge == base64.RawURLEncoding.EncodeToString(expected_challenge)
 }
 
@@ -152,14 +146,12 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 	base64DecodedAttestationSlice, err := base64.RawURLEncoding.DecodeString(publicKeyCredential.Response.AttestationObject)
 
 	if err != nil {
-		fmt.Println(err)
 		return false
 	}
 
 	err = cbor.Unmarshal(base64DecodedAttestationSlice, &attestationObject)
 
 	if err != nil {
-		fmt.Println(err)
 		return false
 	}
 
@@ -171,7 +163,6 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 
 	err = cbor.Unmarshal(credentialPublicKey, &credentialPublicKeyMap)
 	if err != nil {
-		fmt.Println(err)
 		return false
 	}
 
