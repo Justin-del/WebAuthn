@@ -1,7 +1,7 @@
 package webauthn
 
 func isValidES256Key(publicKey map[any]any) bool {
-	return publicKey[1] == 2 && publicKey[3] == -7 && publicKey[-1] == 1
+	return publicKey[1].(int) == 2 && publicKey[3].(int) == -7 && publicKey[-1].(int) == 1
 }
 
 func isValidEdDsaKey(publicKey map[any]any) bool {
