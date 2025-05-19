@@ -147,12 +147,14 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 	base64DecodedAttestationSlice, err := base64.RawURLEncoding.DecodeString(publicKeyCredential.Response.AttestationObject)
 
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 
 	err = cbor.Unmarshal(base64DecodedAttestationSlice, &attestationObject)
 
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 
@@ -169,7 +171,7 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 	}
 
 	fmt.Println("Is client data json correct", isClientDataJSONCorrect)
-	fmt.Println("Is correct hash", IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) )
+	fmt.Println("Is correct hash", IsCorrectHash([32]byte(attestationObject.AuthData[0:32])))
 	fmt.Println("Is valid key", credentialPublicKeyMap)
 
 	canRegister := isClientDataJSONCorrect && IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) && AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required") && IsValidKey(credentialPublicKeyMap)
