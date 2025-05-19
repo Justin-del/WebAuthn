@@ -179,7 +179,7 @@ func RegisterPublicKeyCredential(session *RegistrationSession, publicKeyCredenti
 /*
 This function will return an AuthenticationResult where each field is set to their default value if there is an error. It is the consumer's responsibility to ensure that the storedCredential belongs to the user. If the user is identified before the authentication ceremony is began, then please verify that the UserHandle of publicKeyCredential.Response maps to the current user.
 */
-func AuthenticatePublicKeyCredential(session *RegistrationSession, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
+func AuthenticatePublicKeyCredential(session *AuthenticationSession, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
 	//If options.allowCredentials is not empty, verify that credential.id identifies one of the public key credentials listed in allowCredentials.
 	found := len(allowCredentials) == 0
 	for _, cred := range allowCredentials {
