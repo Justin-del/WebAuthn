@@ -164,6 +164,7 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 
 	err = cbor.Unmarshal(credentialPublicKey, &credentialPublicKeyMap)
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 
