@@ -25,7 +25,7 @@ var SupportedPublicKeyAlgorithms []PublicKey = []PublicKey{
 	PublicKey{
 		Alg:-257,
 		Type:"public-key",
-	}
+	},
 }
 
 var Rp RelyingParty = RelyingParty{
