@@ -6,4 +6,5 @@ This is an implementation of the WebAuthn specification (Level 2). See https://w
 </div>
 <ul>
     <li>Attestation is not cared at all.</li>
+    <li>Extensions are not used at all.</li>
 </ul>
