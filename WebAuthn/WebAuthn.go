@@ -167,7 +167,7 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 	credentialId := attestationObject.AuthData[55 : 55+credentialIdLength]
 	credentialPublicKey := attestationObject.AuthData[55+credentialIdLength:]
 
-	var credentialPublicKeyMap map[any]any
+	var credentialPublicKeyMap map[int64]any
 
 	err = cbor.Unmarshal(credentialPublicKey, &credentialPublicKeyMap)
 	if err != nil {
@@ -175,11 +175,6 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 		return false
 	}
 
-	fmt.Println("Is client data json correct", isClientDataJSONCorrect)
-	fmt.Println("Is correct hash", IsCorrectHash([32]byte(attestationObject.AuthData[0:32])))
-	fmt.Println("Is valid key", IsValidKey(credentialPublicKeyMap))
-	fmt.Println(AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required"))
-	fmt.Println("Credential public key map", credentialPublicKeyMap)
 	canRegister := isClientDataJSONCorrect && IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) && AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required") && IsValidKey(credentialPublicKeyMap)
 
 	if canRegister {
