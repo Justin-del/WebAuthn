@@ -13,7 +13,7 @@ import (
 binaryConcatenation refers to the binary concatenation of authData and hash.
 */
 func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentialPublicKey []byte) bool {
-	var decodedPublicKeyMap map[any]any
+	var decodedPublicKeyMap map[int64]any
 
 	cbor.Unmarshal(credentialPublicKey, &decodedPublicKeyMap)
 

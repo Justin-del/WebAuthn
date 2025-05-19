@@ -228,11 +228,6 @@ func AuthenticatePublicKeyCredential(session *Session, allowCredentials []Creden
 		functionToSaveSignCount(credentialId, int(signatureCounterOfAuthenticator))
 	}
 
-	fmt.Println("Is client data json correct", isClientDataJSONCorrect)
-	fmt.Println("Is correct hash ", IsCorrectHash([32]byte(authData[0:32])))
-	fmt.Println(AreFlagsValid(authData[32], session.UserVerification == "required"))
-	fmt.Println(IsSignatureVerified(signatureBytes, append(authData, hash[:]...), storedCredential.CredentialPublicKey))
-	
 	return AuthenticationResult{
 		CloneWarning:              cloneWarning,
 		AreEssentialStepsVerified: isClientDataJSONCorrect && IsCorrectHash([32]byte(authData[0:32])) && AreFlagsValid(authData[32], session.UserVerification == "required") && IsSignatureVerified(signatureBytes, append(authData, hash[:]...), storedCredential.CredentialPublicKey),
