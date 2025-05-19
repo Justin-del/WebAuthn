@@ -1,5 +1,7 @@
 package webauthn
 
+import "github.com/fxamacker/cbor/v2"
+
 type Session struct {
 	Challenge        []byte
 	UserVerification string
@@ -167,7 +169,7 @@ type AuthenticationPublicKeyCredential struct {
 }
 
 type AttestationObject struct {
-	Fmt      string `cbor:"fmt"`
-	AttStmt  []byte `cbor:"attStmt"`
-	AuthData []byte `cbor:"authData"`
+	Fmt      string   `cbor:"fmt"`
+	AttStmt  cbor.RawMessage `cbor:"attStmt"`
+	AuthData []byte   `cbor:"authData"`
 }
