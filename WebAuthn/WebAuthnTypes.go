@@ -70,7 +70,7 @@ type PublicKeyCredentialCreationOptions struct {
 		Challenge is base64 url encoded
 	*/
 	Challenge          string       `json:"challenge"`
-	ExcludeCredentials []Credential `json:"excludeCredentials"`
+	ExcludeCredentials []Credential `json:"excludeCredentials,omitempty"`
 	PubKeyCredParams   []PublicKey  `json:"pubKeyCredParams"`
 	Rp                 RelyingParty `json:"rp"`
 	/*
