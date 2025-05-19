@@ -1,6 +1,5 @@
 package webauthn
 
-import "fmt"
 
 func isValidES256Key(publicKey map[int64]any) bool {
 	return publicKey[1].(uint64) == 2 && publicKey[3].(int64) == -7 && publicKey[-1].(uint64) == 1
