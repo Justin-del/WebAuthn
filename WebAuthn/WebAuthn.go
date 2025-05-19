@@ -6,23 +6,31 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
-	"slices"
 
 	"github.com/fxamacker/cbor/v2"
 )
 
-var supportedPublicKeyAlgorithms []int = []int{-8, -7, -257}
+/*
+The list of public key algorithms that this WebAuthn library supports.
+*/
+var SupportedPublicKeyAlgorithms []PublicKey = []PublicKey{
+	PublicKey{
+		Alg:-7,
+		Type:"public-key",
+	},
+	PublicKey{
+		Alg:-8,
+		Type:"public-key",
+	},
+	PublicKey{
+		Alg:-257,
+		Type:"public-key",
+	}
+}
 
 var Rp RelyingParty = RelyingParty{
 	Id:   "localhost",
 	Name: "localhost",
-}
-
-func panicIfSIsNotOfExpectedValue(s string, expected []string) {
-	found := slices.Contains(expected, s)
-	if !found {
-		panic("Value '" + s + "' is not in the list of expected values.")
-	}
 }
 
 func GetBase64URLEncodedChallenge() string {
@@ -44,7 +52,6 @@ func GetChallenge() []byte {
 
 	return challenge
 }
-
 
 func ParseClientDataJSON(base64URLEncodedString string) ClientDataJSON {
 	data, _ := base64.RawURLEncoding.DecodeString(base64URLEncodedString)

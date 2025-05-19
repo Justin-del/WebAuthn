@@ -59,7 +59,7 @@ type PublicKey struct {
 	Alg int `json:"alg"`
 
 	/*
-		Type can only be public key for now.
+		Type can only be public-key for now.
 	*/
 	Type string `json:"type"`
 }
