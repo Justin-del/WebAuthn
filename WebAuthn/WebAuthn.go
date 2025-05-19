@@ -9,7 +9,6 @@ import (
 	"slices"
 
 	"github.com/fxamacker/cbor/v2"
-	"github.com/google/uuid"
 )
 
 var supportedPublicKeyAlgorithms []int = []int{-8, -7, -257}
@@ -36,69 +35,16 @@ func GetBase64URLEncodedChallenge() string {
 	return encoded
 }
 
-/*
-authenticatorAttachment can either be "platform"|"cross-platform"|"".
-residentKey can either be "discouraged"|"preferred"|"required".
-userVerification can either be "discouraged"|"preferred"|"required".
-hints is an array of strings and each value can either be "security-key"|"client-device"|"hybrid". The session should be stored in your database of choice as it will be needed during the registration process.
-*/
-func GetPublicKeyCredentialCreationOptions(authenticatorAttachment string, residentKey string, userVerification string, excludeCredentials []Credential, timeoutInMilliseconds int, hints []string, name string) (*RegistrationSession, *PublicKeyCredentialCreationOptions) {
-	panicIfSIsNotOfExpectedValue(authenticatorAttachment, []string{"platform", "cross-platform", ""})
-	panicIfSIsNotOfExpectedValue(residentKey, []string{"discouraged", "preferred", "required"})
-	panicIfSIsNotOfExpectedValue(userVerification, []string{"discouraged", "preferred", "required"})
-
-	authenticatorSelection := AuthenticatorSelection{
-		AuthenticatorAttachment: authenticatorAttachment,
-		ResidentKey:             residentKey,
-		UserVerification:        userVerification,
-	}
-
-	pubKeyCredParams := make([]PublicKey, len(supportedPublicKeyAlgorithms))
-	for i, alg := range supportedPublicKeyAlgorithms {
-		pubKeyCredParams[i] = PublicKey{
-			Alg:  alg,
-			Type: "public-key",
-		}
-	}
-
-	uuidBytes, err := uuid.New().MarshalBinary()
-	if err != nil {
-		panic("Failed to generate UUID: " + err.Error())
-	}
-	userId := base64.RawURLEncoding.EncodeToString(uuidBytes)
-
-	user := User{
-		Id:          userId,
-		Name:        name,
-		DisplayName: name,
-	}
-
-	challengeBytes := make([]byte, 32)
-	_, err = rand.Read(challengeBytes)
+func GetChallenge() []byte {
+	challenge := make([]byte, 32)
+	_, err := rand.Read(challenge)
 	if err != nil {
 		panic("Failed to generate random challenge: " + err.Error())
 	}
-	challenge := base64.RawURLEncoding.EncodeToString(challengeBytes)
 
-	publicKeyCredentialCreationOptions := PublicKeyCredentialCreationOptions{
-		AuthenticatorSelection: authenticatorSelection,
-		Challenge:              challenge,
-		ExcludeCredentials:     excludeCredentials,
-		PubKeyCredParams:       pubKeyCredParams,
-		Rp:                     Rp,
-		Timeout:                timeoutInMilliseconds,
-		User:                   user,
-		Hints:                  hints,
-	}
-
-	session := RegistrationSession{
-		Challenge:        challengeBytes,
-		UserVerification: userVerification,
-		UserId:           uuidBytes,
-	}
-
-	return &session, &publicKeyCredentialCreationOptions
+	return challenge
 }
+
 
 func ParseClientDataJSON(base64URLEncodedString string) ClientDataJSON {
 	data, _ := base64.RawURLEncoding.DecodeString(base64URLEncodedString)
