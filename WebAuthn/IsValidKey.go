@@ -16,6 +16,10 @@ func isValidRS256Key(publicKey map[any]any) bool {
 
 func IsValidKey(publicKey map[any]any) bool {
 	fmt.Println(publicKey[-2] != nil)
+	fmt.Println(publicKey[-3] != nil)
+	fmt.Println(publicKey[1] == 2)
+	fmt.Println(publicKey[3] == -7)
+	fmt.Println(publicKey[-1] == 1)
 
 	return (publicKey[-2] != nil && publicKey[-3] != nil) && (isValidES256Key(publicKey) || isValidEdDsaKey(publicKey) || isValidRS256Key(publicKey))
 }
