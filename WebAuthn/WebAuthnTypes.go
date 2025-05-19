@@ -1,9 +1,12 @@
 package webauthn
 
-type RegistrationSession struct {
+type Session struct {
 	Challenge        []byte
 	UserVerification string
-	UserId           string
+	/*
+		The UserId is not guaranteed to be available.
+	*/
+	UserId string
 }
 
 type AuthenticatorSelection struct {
