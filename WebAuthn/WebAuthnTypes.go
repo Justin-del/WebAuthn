@@ -1,6 +1,6 @@
 package webauthn
 
-type Session struct {
+type RegistrationSession struct {
 	Challenge        []byte
 	UserVerification string
 	UserId           string
