@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
+	"fmt"
 	"slices"
 
 	"github.com/fxamacker/cbor/v2"
