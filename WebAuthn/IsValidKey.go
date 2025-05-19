@@ -7,17 +7,13 @@ func isValidES256Key(publicKey map[int64]any) bool {
 }
 
 func isValidEdDsaKey(publicKey map[int64]any) bool {
-	return publicKey[1] == 1 && publicKey[3] == -8 && publicKey[-1] == 6
+	return publicKey[1].(uint64) == 1 && publicKey[3].(int64) == -8 && publicKey[-1].(uint64) == 6
 }
 
 func isValidRS256Key(publicKey map[int64]any) bool {
-	return publicKey[1] == 3 && publicKey[3] == -257 && publicKey[-1] != nil
+	return publicKey[1].(uint64) == 3 && publicKey[3].(int64) == -257 && publicKey[-1] != nil
 }
 
 func IsValidKey(publicKey map[int64]any) bool {
-	fmt.Println(isValidES256Key(publicKey))
-	fmt.Println("PublicKey[1] is ", publicKey[1])
-	fmt.Println("PublicKey[-1] is ", publicKey[-1])
-	fmt.Println("PublicKey[3] is ", publicKey[3])
 	return (publicKey[-2] != nil && publicKey[-3] != nil) && (isValidES256Key(publicKey) || isValidEdDsaKey(publicKey) || isValidRS256Key(publicKey))
 }
