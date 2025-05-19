@@ -14,17 +14,17 @@ import (
 The list of public key algorithms that this WebAuthn library supports.
 */
 var SupportedPublicKeyAlgorithms []PublicKey = []PublicKey{
-	PublicKey{
-		Alg:-7,
-		Type:"public-key",
+	{
+		Alg:  -7,
+		Type: "public-key",
 	},
-	PublicKey{
-		Alg:-8,
-		Type:"public-key",
+	{
+		Alg:  -8,
+		Type: "public-key",
 	},
-	PublicKey{
-		Alg:-257,
-		Type:"public-key",
+	{
+		Alg:  -257,
+		Type: "public-key",
 	},
 }
 
