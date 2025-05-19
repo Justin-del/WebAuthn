@@ -5,10 +5,7 @@ import "github.com/fxamacker/cbor/v2"
 type RegistrationSession struct {
 	Challenge        []byte
 	UserVerification string
-	/*
-		The UserId is not guaranteed to be available.
-	*/
-	UserId []byte
+	UserId           []byte
 }
 
 type AuthenticationSession struct {
