@@ -115,6 +115,11 @@ depend for security purposes if not all authenticators support it.
 */
 func IsClientDataJSONCorrect(clientDataJSON string, expected_origin string, expected_type string, expected_challenge []byte) bool {
 	clientData := ParseClientDataJSON(clientDataJSON)
+	fmt.Println("clientData.Origin", clientData.Origin)
+	fmt.Println("expected origin", expected_origin)
+
+	fmt.Println("clientData.Challenge", clientData.Challenge)
+	fmt.Println("expected origin", base64.RawURLEncoding.EncodeToString(expected_challenge))
 	return clientData.Origin == expected_origin && clientData.Type == expected_type && clientData.Challenge == base64.RawURLEncoding.EncodeToString(expected_challenge)
 }
 
