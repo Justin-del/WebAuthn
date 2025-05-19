@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
-	"fmt"
 	"slices"
 
 	"github.com/fxamacker/cbor/v2"
@@ -227,11 +226,6 @@ func AuthenticatePublicKeyCredential(session *Session, allowCredentials []Creden
 		}
 		functionToSaveSignCount(credentialId, int(signatureCounterOfAuthenticator))
 	}
-
-	fmt.Println("Is signature verified", IsSignatureVerified(signatureBytes, append(authData, hash[:]...), storedCredential.CredentialPublicKey))
-	fmt.Println("Is client data JSON correct", isClientDataJSONCorrect)
-	fmt.Println("Is correct hash ", IsCorrectHash([32]byte(authData[0:32])))
-	fmt.Println("Are flags valid ", authData[32])
 
 	return AuthenticationResult{
 		CloneWarning:              cloneWarning,
