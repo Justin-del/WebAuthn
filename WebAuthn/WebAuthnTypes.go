@@ -167,7 +167,7 @@ type AuthenticationPublicKeyCredential struct {
 }
 
 type AttestationObject struct {
-	Fmt      string
-	AttStmt  []byte
-	AuthData []byte
+	Fmt      string `cbor:"fmt"`
+	AttStmt  []byte `cbor:"attStmt"`
+	AuthData []byte `cbor:"authData"`
 }
