@@ -119,7 +119,7 @@ func IsClientDataJSONCorrect(clientDataJSON string, expected_origin string, expe
 	fmt.Println("expected origin", expected_origin)
 
 	fmt.Println("clientData.Challenge", clientData.Challenge)
-	fmt.Println("expected origin", base64.RawURLEncoding.EncodeToString(expected_challenge))
+	fmt.Println("expected challenge", base64.RawURLEncoding.EncodeToString(expected_challenge))
 	return clientData.Origin == expected_origin && clientData.Type == expected_type && clientData.Challenge == base64.RawURLEncoding.EncodeToString(expected_challenge)
 }
 
