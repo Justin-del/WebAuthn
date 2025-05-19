@@ -1,4 +1,4 @@
-module Justin-del/WebAuthn
+module github.com/Justin-del/WebAuthn
 
 go 1.24.3
 
