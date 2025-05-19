@@ -42,7 +42,7 @@ residentKey can either be "discouraged"|"preferred"|"required".
 userVerification can either be "discouraged"|"preferred"|"required".
 hints is an array of strings and each value can either be "security-key"|"client-device"|"hybrid". The session should be stored in your database of choice as it will be needed during the registration process.
 */
-func GetPublicKeyCredentialCreationOptions(authenticatorAttachment string, residentKey string, userVerification string, excludeCredentials []Credential, timeoutInMilliseconds int, hints []string, name string) (*Session, *PublicKeyCredentialCreationOptions) {
+func GetPublicKeyCredentialCreationOptions(authenticatorAttachment string, residentKey string, userVerification string, excludeCredentials []Credential, timeoutInMilliseconds int, hints []string, name string) (*RegistrationSession, *PublicKeyCredentialCreationOptions) {
 	panicIfSIsNotOfExpectedValue(authenticatorAttachment, []string{"platform", "cross-platform", ""})
 	panicIfSIsNotOfExpectedValue(residentKey, []string{"discouraged", "preferred", "required"})
 	panicIfSIsNotOfExpectedValue(userVerification, []string{"discouraged", "preferred", "required"})
@@ -91,7 +91,7 @@ func GetPublicKeyCredentialCreationOptions(authenticatorAttachment string, resid
 		Hints:                  hints,
 	}
 
-	session := Session{
+	session := RegistrationSession{
 		Challenge:        challengeBytes,
 		UserVerification: userVerification,
 		UserId:           uuidBytes,
@@ -138,7 +138,7 @@ func AreFlagsValid(flags byte, is_user_verification_required bool) bool {
 The functionToSaveCredentialsIntoDatabase parameter should return true if the credential is succesfully saved and false if the credential is not succesfully saved.
 This function returns true if the registration is successful and false if the registration is not succesful. The credentialId is not guaranteed to be unregistered for any user. Also, the consumer of this function must ensure that the challenge gets deleted  after it is used.
 */
-func RegisterPublicKeyCredential(session *Session, publicKeyCredential *RegistrationPublicKeyCredential, expectedOrigin string, functionToSaveCredentialsIntoDatabase func(credentialId []byte, credentialPublicKey []byte, transports []string, signCount uint32, userId []byte) bool) bool {
+func RegisterPublicKeyCredential(session *RegistrationSession, publicKeyCredential *RegistrationPublicKeyCredential, expectedOrigin string, functionToSaveCredentialsIntoDatabase func(credentialId []byte, credentialPublicKey []byte, transports []string, signCount uint32, userId []byte) bool) bool {
 
 	isClientDataJSONCorrect := IsClientDataJSONCorrect(publicKeyCredential.Response.ClientDataJSON, expectedOrigin, "webauthn.create", session.Challenge)
 	var attestationObject AttestationObject
@@ -179,7 +179,7 @@ func RegisterPublicKeyCredential(session *Session, publicKeyCredential *Registra
 /*
 This function will return an AuthenticationResult where each field is set to their default value if there is an error. It is the consumer's responsibility to ensure that the storedCredential belongs to the user. If the user is identified before the authentication ceremony is began, then please verify that the UserHandle of publicKeyCredential.Response maps to the current user.
 */
-func AuthenticatePublicKeyCredential(session *Session, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
+func AuthenticatePublicKeyCredential(session *RegistrationSession, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
 	//If options.allowCredentials is not empty, verify that credential.id identifies one of the public key credentials listed in allowCredentials.
 	found := len(allowCredentials) == 0
 	for _, cred := range allowCredentials {

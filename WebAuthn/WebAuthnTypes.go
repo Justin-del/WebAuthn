@@ -2,13 +2,18 @@ package webauthn
 
 import "github.com/fxamacker/cbor/v2"
 
-type Session struct {
+type RegistrationSession struct {
 	Challenge        []byte
 	UserVerification string
 	/*
 		The UserId is not guaranteed to be available.
 	*/
 	UserId []byte
+}
+
+type AuthenticationSession struct {
+	Challenge        []byte
+	UserVerification string
 }
 
 type AuthenticatorSelection struct {
@@ -169,7 +174,7 @@ type AuthenticationPublicKeyCredential struct {
 }
 
 type AttestationObject struct {
-	Fmt      string   `cbor:"fmt"`
+	Fmt      string          `cbor:"fmt"`
 	AttStmt  cbor.RawMessage `cbor:"attStmt"`
-	AuthData []byte   `cbor:"authData"`
+	AuthData []byte          `cbor:"authData"`
 }
