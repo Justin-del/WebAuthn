@@ -6,7 +6,7 @@ type Session struct {
 	/*
 		The UserId is not guaranteed to be available.
 	*/
-	UserId string
+	UserId []byte
 }
 
 type AuthenticatorSelection struct {

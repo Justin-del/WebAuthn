@@ -94,7 +94,7 @@ func GetPublicKeyCredentialCreationOptions(authenticatorAttachment string, resid
 	session := Session{
 		Challenge:        challengeBytes,
 		UserVerification: userVerification,
-		UserId:           user.Id,
+		UserId:           uuidBytes,
 	}
 
 	return &session, &publicKeyCredentialCreationOptions
@@ -138,7 +138,7 @@ func AreFlagsValid(flags byte, is_user_verification_required bool) bool {
 The functionToSaveCredentialsIntoDatabase parameter should return true if the credential is succesfully saved and false if the credential is not succesfully saved.
 This function returns true if the registration is successful and false if the registration is not succesful. The credentialId is not guaranteed to be unregistered for any user. Also, the consumer of this function must ensure that the challenge gets deleted  after it is used.
 */
-func RegisterPublicKeyCredential(session *Session, publicKeyCredential *RegistrationPublicKeyCredential, expectedOrigin string, functionToSaveCredentialsIntoDatabase func(credentialId []byte, credentialPublicKey []byte, transports []string, signCount uint32, userId string) bool) bool {
+func RegisterPublicKeyCredential(session *Session, publicKeyCredential *RegistrationPublicKeyCredential, expectedOrigin string, functionToSaveCredentialsIntoDatabase func(credentialId []byte, credentialPublicKey []byte, transports []string, signCount uint32, userId []byte) bool) bool {
 
 	isClientDataJSONCorrect := IsClientDataJSONCorrect(publicKeyCredential.Response.ClientDataJSON, expectedOrigin, "webauthn.create", session.Challenge)
 	var attestationObject AttestationObject
