@@ -229,6 +229,9 @@ func AuthenticatePublicKeyCredential(session *Session, allowCredentials []Creden
 	}
 
 	fmt.Println("Is signature verified", IsSignatureVerified(signatureBytes, append(authData, hash[:]...), storedCredential.CredentialPublicKey))
+	fmt.Println("Is client data JSON correct", isClientDataJSONCorrect)
+	fmt.Println("Is correct hash ", IsCorrectHash([32]byte(authData[0:32])))
+	fmt.Println("Are flags valid ", authData[32])
 
 	return AuthenticationResult{
 		CloneWarning:              cloneWarning,
