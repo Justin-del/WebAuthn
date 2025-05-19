@@ -3,7 +3,7 @@ package webauthn
 import "fmt"
 
 func isValidES256Key(publicKey map[int64]any) bool {
-	return publicKey[1] == 2 && publicKey[3] == -7 && publicKey[-1] == 1
+	return publicKey[1].(int64) == 2 && publicKey[3].(int64) == -7 && publicKey[-1].(int64) == 1
 }
 
 func isValidEdDsaKey(publicKey map[int64]any) bool {
