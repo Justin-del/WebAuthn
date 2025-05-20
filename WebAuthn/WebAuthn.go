@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/json"
+	"fmt"
 
 	"github.com/fxamacker/cbor/v2"
 )
@@ -116,6 +117,7 @@ func RegisterPublicKeyCredential(session *RegistrationSession, publicKeyCredenti
 
 	err = cbor.Unmarshal(credentialPublicKey, &credentialPublicKeyMap)
 	if err != nil {
+		fmt.Println("Error is ", err)
 		return false
 	}
 
