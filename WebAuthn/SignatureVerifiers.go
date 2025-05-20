@@ -40,8 +40,8 @@ func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentia
 
 	//Handle for RS256 public key.
 	if decodedPublicKeyMap[3].(int64) == -257 {
-		fmt.Println(binary.BigEndian.Uint32(decodedPublicKeyMap[-2].([]byte)))
-		
+		fmt.Println(decodedPublicKeyMap[-2].([]byte))
+
 		publicKey := rsa.PublicKey{
 			N: big.NewInt(256).SetBytes(decodedPublicKeyMap[-1].([]byte)),
 			E: int(binary.BigEndian.Uint32(decodedPublicKeyMap[-2].([]byte))),
