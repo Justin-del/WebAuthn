@@ -40,8 +40,8 @@ func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentia
 	if decodedPublicKeyMap[3].(int64) == -257 {
 		exponent := decodedPublicKeyMap[-2].([]byte)
 		publicKey := rsa.PublicKey{
-			N: big.NewInt(256).SetBytes(decodedPublicKeyMap[-1].([]byte)),
-			E: int(big.NewInt(int64(len(exponent))).SetBytes(exponent).Int64()),
+			N: big.NewInt(0).SetBytes(decodedPublicKeyMap[-1].([]byte)),
+			E: int(big.NewInt(0).SetBytes(exponent).Int64()),
 		}
 		hash := sha256.Sum256(binaryConcatenation)
 		hashBytes := hash[:]
