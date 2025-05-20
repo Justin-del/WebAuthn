@@ -7,6 +7,7 @@ import (
 	"crypto/elliptic"
 	"crypto/rsa"
 	"crypto/sha256"
+	"encoding/binary"
 	"math/big"
 
 	"github.com/fxamacker/cbor/v2"
@@ -40,7 +41,7 @@ func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentia
 	if decodedPublicKeyMap[3].(int64) == -257 {
 		publicKey := rsa.PublicKey{
 			N: big.NewInt(256).SetBytes(decodedPublicKeyMap[-1].([]byte)),
-			E: int(decodedPublicKeyMap[-2].(uint64)),
+			E: int(binary.BigEndian.Uint64(decodedPublicKeyMap[-2].([]byte))),
 		}
 		hash := sha256.Sum256(binaryConcatenation)
 		hashBytes := hash[:]
