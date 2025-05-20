@@ -23,8 +23,8 @@ func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentia
 	if decodedPublicKeyMap[3].(int64) == -7 {
 		publicKey := ecdsa.PublicKey{
 			Curve: elliptic.P256(),
-			X:     big.NewInt(32).SetBytes(decodedPublicKeyMap[-2].([]byte)),
-			Y:     big.NewInt(32).SetBytes(decodedPublicKeyMap[-3].([]byte)),
+			X:     big.NewInt(0).SetBytes(decodedPublicKeyMap[-2].([]byte)),
+			Y:     big.NewInt(0).SetBytes(decodedPublicKeyMap[-3].([]byte)),
 		}
 		hash := sha256.Sum256(binaryConcatenation)
 		hashBytes := hash[:]
