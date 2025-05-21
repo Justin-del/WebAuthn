@@ -33,7 +33,7 @@ func IsSignatureVerified(signature []byte, binaryConcatenation []byte, credentia
 
 	//Handle for EdDsa public key.
 	if decodedPublicKeyMap[3].(int64) == -8 {
-		return ed25519.Verify(credentialPublicKey, binaryConcatenation, signature)
+		return ed25519.Verify(decodedPublicKeyMap[-2].([]byte), binaryConcatenation, signature)
 	}
 
 	//Handle for RS256 public key.

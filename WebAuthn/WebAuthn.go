@@ -119,7 +119,7 @@ func RegisterPublicKeyCredential(session *RegistrationSession, publicKeyCredenti
 		return false
 	}
 
-	canRegister := isClientDataJSONCorrect && IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) && AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required") && IsValidKey(credentialPublicKeyMap)
+	canRegister := isClientDataJSONCorrect && IsCorrectHash([32]byte(attestationObject.AuthData[0:32])) && AreFlagsValid(attestationObject.AuthData[32], session.UserVerification == "required") && IsValidCoseKey(credentialPublicKeyMap)
 
 	if canRegister {
 		return functionToSaveCredentialsIntoDatabase(credentialId, credentialPublicKey, publicKeyCredential.Response.Transports, binary.BigEndian.Uint32(attestationObject.AuthData[33:37]), session.UserId)
