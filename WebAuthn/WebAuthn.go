@@ -134,16 +134,19 @@ This function will return an AuthenticationResult where each field is set to the
 */
 func AuthenticatePublicKeyCredential(session *AuthenticationSession, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
 	//If options.allowCredentials is not empty, verify that credential.id identifies one of the public key credentials listed in allowCredentials.
-	found := len(allowCredentials) == 0
-	for _, cred := range allowCredentials {
-		if cred.Id == publicKeyCredential.RawId {
-			found = true
-			break
-		}
-	}
 
-	if !found {
-		return AuthenticationResult{}
+	if len(allowCredentials)!=0{
+		found := false
+	    for _, cred := range allowCredentials {
+			if cred.Id == publicKeyCredential.RawId {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			return AuthenticationResult{}
+		}
 	}
 
 	isClientDataJSONCorrect := IsClientDataJSONCorrect(publicKeyCredential.Response.ClientDataJSON, expectedOrigin, "webauthn.get", session.Challenge)
