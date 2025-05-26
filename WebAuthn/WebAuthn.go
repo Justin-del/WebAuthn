@@ -88,6 +88,7 @@ func AreFlagsValid(flags byte, is_user_verification_required bool) bool {
 }
 
 /*
+https://www.w3.org/TR/webauthn-2/#sctn-registering-a-new-credential
 The functionToSaveCredentialsIntoDatabase parameter should return true if the credential is succesfully saved and false if the credential is not succesfully saved.
 This function returns true if the registration is successful and false if the registration is not succesful. The credentialId is not guaranteed to be unregistered for any user. Also, the consumer of this function must ensure that the challenge gets deleted  after it is used.
 */
@@ -130,6 +131,7 @@ func RegisterPublicKeyCredential(session *RegistrationSession, publicKeyCredenti
 }
 
 /*
+Implementation is based on https://www.w3.org/TR/webauthn-2/#sctn-verifying-assertion
 This function will return an AuthenticationResult where each field is set to their default value if there is an error. It is the consumer's responsibility to ensure that the storedCredential belongs to the user. If the user is identified before the authentication ceremony is began, then please verify that the UserHandle of publicKeyCredential.Response maps to the current user.
 */
 func AuthenticatePublicKeyCredential(session *AuthenticationSession, allowCredentials []Credential, publicKeyCredential *AuthenticationPublicKeyCredential, storedCredential *StoredCredential, expectedOrigin string, functionToSaveSignCount func(credentialId []byte, signCount int)) AuthenticationResult {
